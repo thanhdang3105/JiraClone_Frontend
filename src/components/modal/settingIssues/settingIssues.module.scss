@@ -1,0 +1,94 @@
+.wrapper_modal{
+    .modal_header{
+        display: flex;
+        gap: 5px;
+        padding-bottom: 15px;
+        button:first-child{
+            margin-right: auto;
+        }
+    }
+    .modal_body{
+        display: flex;
+        gap: 15px;
+        width: 100%;
+        .modal_body-info{
+            width: 65%;
+            max-width: 65%;
+            
+            .modal_body-info--title{
+                width: fit-content;
+                height: fit-content;
+                font-size: 25px;
+                font-weight: bold;
+                margin: 0;
+                padding: 6.4px 10px;
+                &:hover{
+                    background-color: #9999;
+                }
+                &:focus{
+                    outline: 2px solid #999;
+                }
+                & + div{
+                    display: none;
+                    gap: 10px;
+                    align-items: center;
+                    margin-top: 5px;
+                }
+            }
+            .inputChat_box{
+                display: flex;
+                width: 100%;
+                gap: 10px;
+                padding: 0 10px;
+                .inputChat_box-input{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    div{
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                }
+            }
+            .listComments{
+                display: flex;
+                list-style: none;
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px 10px 10px;
+                margin: 0;
+                .comment{
+                    display: flex;
+                    gap: 10px;
+                    span{
+                        flex: none;
+                    }
+                    .comment-info{
+                        width: max-content;
+                        p{
+                            font-weight: bold;
+                            margin: 0;
+                            span{
+                                font-size: 10px;
+                                color: #999;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .modal_body-status{
+            width: 35%;
+            max-width: 35%;
+        }
+    }
+}
+
+.text-label{
+    font-size: 14px;
+    padding: 0 10px;
+    color: #999;
+    font-weight: bold;
+}

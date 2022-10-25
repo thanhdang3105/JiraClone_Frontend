@@ -1,0 +1,16 @@
+.wrapper_projectDetails{
+    display: inline-block;
+    width: 100%;
+    padding: 24px;
+    .projectDetails_content{
+        width: 640px;
+        margin: 0 auto;
+        .content_heading{
+            h3{
+                margin: 0;
+                color: rgb(94, 108, 132);
+                font-size: 15px;
+            }
+        }
+    }
+}

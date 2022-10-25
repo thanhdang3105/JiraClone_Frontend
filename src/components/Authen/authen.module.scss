@@ -1,0 +1,36 @@
+.wrapper_authen{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,rgba(255, 0, 0, 0.8),rgba(255, 166, 0, 0.8),rgba(255, 255, 0, 0.8),rgba(153, 205, 50, 0.8),rgba(0, 128, 0, 0.8),rgba(0, 255, 255, 0.8),rgba(0, 0, 255, 0.8),rgba(128, 0, 128, 0.8));
+    .authen_box{
+        display: flex;
+        width: 30%;
+        height: fit-content;
+        flex-direction: column;
+        padding: 50px 50px 20px;
+        border: 1px solid #999;
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+        background-color: white;
+        button{
+            width: 100%;
+            margin: 0 auto;
+        }
+        .authen_box-footer{
+            color: rgb(98, 98, 255);
+            text-align: center;
+            span{
+                display: block;
+                line-height: 1.5;
+                text-decoration: underline;
+                cursor: pointer;
+                &:hover{
+                    color: blue;
+                }
+            }
+        }
+    }
+    
+}

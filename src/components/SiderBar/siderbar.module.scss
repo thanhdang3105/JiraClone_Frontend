@@ -1,0 +1,178 @@
+.wrapper_sider{
+    display: inline-block;
+    width: max-content;
+    width: 360px;
+    height: 100vh;
+    padding-left: 64px;
+    position: relative;
+    .sider_collapse{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 64px;
+        height: 100%;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        background-color: rgb(7, 71, 166);
+        color: white;
+        transition: all 0.2s linear;
+        z-index: 99;
+        .sider_collapse-logo{
+            width: 100%;
+            padding: 24px 18px;
+            text-align: left;
+        }
+        .sider_collapse-list{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            list-style: none;
+            .sider_collapse-item{
+                display: flex;
+                padding: 10px 18px;
+                overflow: hidden;
+                align-items: center;
+                white-space: nowrap;
+                width: 100%;
+                gap: 10px;
+                font-weight: bold;
+                color: rgb(233, 233, 233);
+                cursor: pointer;
+                span{
+                    font-size: 25px;
+                }
+                strong{
+                    display: none;
+                }
+                &:hover{
+                    background-color: rgba(153, 153, 153, 0.2);
+                }
+                &:last-child{
+                    margin-top: auto;
+                    margin-bottom: 24px;
+                }
+            }
+        }
+        &:hover{
+            width: 200px;
+            box-shadow: 0px 0px 50px 0px rgb(0 0 0 / 60%);
+            .sider_collapse-list{
+                .sider_collapse-item{
+                    strong{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    .sider_menu{
+        position: fixed;
+        top: 0;
+        left: 64px;
+        width: 230px;
+        height: 100%;
+        padding: 24px 18px;
+        background-color: rgba(221, 221, 221, 0.6);
+        border: 1px solid #9999;
+        .sider_menu-info{
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            .sider_menu-info-title{
+                h4{
+                    line-height: 1;
+                    margin: 0;
+                }
+                span{
+                    font-size: 12px;
+                    color: #999;
+                    text-transform: capitalize;
+                }
+            }
+        }
+        .sider_menu-list{
+            padding: 24px 0;
+            width: 100%;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            a{
+                text-decoration: none;
+            }
+            .sider_menu-item{
+                display: flex;
+                width: 100%;
+                align-items: center;
+                gap: 10px;
+                padding: 8px;
+                font-size: 16px;
+                font-weight: 500;
+                border-radius: 2px;
+                color: #333;
+                span{
+                    font-size: 20px;
+                }
+                &:hover,&.active{
+                    background-color: rgba(153, 153, 153, 0.2);
+                    color: rgb(82, 82, 248);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .wrapper_sider{
+        width: 340px;
+        .sider_menu{
+            width: 200px;
+            padding: 24px 18px;
+            .sider_menu-info{
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                .sider_menu-info-title{
+                    h4{
+                        line-height: 1;
+                        margin: 0;
+                    }
+                    span{
+                        font-size: 12px;
+                        color: #999;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+            .sider_menu-list{
+                padding: 24px 0;
+                width: 100%;
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                a{
+                    text-decoration: none;
+                }
+                .sider_menu-item{
+                    display: flex;
+                    width: 100%;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 8px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    border-radius: 2px;
+                    color: #333;
+                    span{
+                        font-size: 20px;
+                    }
+                    &:hover,&.active{
+                        background-color: rgba(153, 153, 153, 0.2);
+                        color: rgb(82, 82, 248);
+                    }
+                }
+            }
+        }
+    }
+}

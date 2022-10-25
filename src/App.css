@@ -1,5 +1,13 @@
+@import 'antd/dist/antd.css';
+@import 'react-quill/dist/quill.snow.css';
+
+
 .App {
-  text-align: center;
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -35,4 +43,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.quillHidden .ql-toolbar{
+  display: none;
+}
+
+.quillHidden .ql-container{
+  border-color: transparent;
 }
