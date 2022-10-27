@@ -7,7 +7,7 @@
     background: linear-gradient(135deg,rgba(255, 0, 0, 0.8),rgba(255, 166, 0, 0.8),rgba(255, 255, 0, 0.8),rgba(153, 205, 50, 0.8),rgba(0, 128, 0, 0.8),rgba(0, 255, 255, 0.8),rgba(0, 0, 255, 0.8),rgba(128, 0, 128, 0.8));
     .authen_box{
         display: flex;
-        width: 30%;
+        min-width: 30vw;
         height: fit-content;
         flex-direction: column;
         padding: 50px 50px 20px;
@@ -34,3 +34,35 @@
     }
     
 }
+
+
+// @media (max-width: 1200px) {
+//     .wrapper_authen{
+//         .authen_box{
+//             width: 40%;
+//         }
+//     }
+// }
+
+// @media (max-width: 768px) {
+//     .wrapper_authen{
+//         .authen_box{
+//             width: 50%;
+//         }
+//     }
+// }
+// @media (max-width: 768px) {
+//     .wrapper_authen{
+//         .authen_box{
+//             width: 50%;
+//         }
+//     }
+// }
+
+// @media (max-width: 480px) {
+//     .wrapper_authen{
+//         .authen_box{
+//             width: 80%;
+//         }
+//     }
+// }

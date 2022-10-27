@@ -31,6 +31,14 @@
             &.expried{
                 animation: blingWaring 1.5s linear infinite;
             }
+            .list_box-item--title{
+                max-width: 100%;
+                word-wrap: break-word;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
             .list_box-item--info{
                 width: 100%;
                 display: flex;

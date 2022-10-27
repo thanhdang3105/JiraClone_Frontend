@@ -31,7 +31,7 @@ export default function IssueItemComponent({provided,data}) {
         <li key={data.id} id={data.id} className={`${styles['list_box-item']} ${data?.expried && styles['expried']}`} onClick={() => {
             dispatch(setIssueView(data.id))}}
             ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-            <p>{data?.title}</p>
+            <p className={styles['list_box-item--title']}>{data?.title}</p>
             <div className={styles['list_box-item--info']}>
                 <span>{issuesType[data.type]}</span>
                 <span>{priority[data.priority]}</span>

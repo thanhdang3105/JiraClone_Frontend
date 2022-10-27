@@ -1,10 +1,10 @@
 .wrapper_sider{
     display: inline-block;
     width: max-content;
-    width: 360px;
+    width: 20vw;
     height: 100vh;
-    padding-left: 64px;
     position: relative;
+    flex: none;
     .sider_collapse{
         position: fixed;
         top: 0;
@@ -71,11 +71,12 @@
         position: fixed;
         top: 0;
         left: 64px;
-        width: 230px;
+        width: calc(20vw - 64px);
         height: 100%;
         padding: 24px 18px;
-        background-color: rgba(221, 221, 221, 0.6);
+        background-color: rgb(247, 247, 247);
         border: 1px solid #9999;
+        z-index: 1;
         .sider_menu-info{
             display: flex;
             gap: 12px;
@@ -125,9 +126,9 @@
 
 @media (max-width: 1024px) {
     .wrapper_sider{
-        width: 340px;
+        width: 20vw;
         .sider_menu{
-            width: 200px;
+            width: calc(20vw - 64px);
             padding: 24px 18px;
             .sider_menu-info{
                 display: flex;

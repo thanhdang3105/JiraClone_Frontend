@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Select } from "antd";
+import { Form, Input, message, Modal, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,11 @@ export default function CreateProject({open:{open,setOpen}}) {
     const formSubmit = (value) => {
         value.userId = currentUser.id
         value.userIds = currentUser.id
+        message.loading({
+            content: 'Loading...',
+            key: 'createProject',
+            duration: 100
+        })
         customFetch('/api/projects/create',{
             method: 'POST',
             body: JSON.stringify(value),
@@ -23,12 +28,23 @@ export default function CreateProject({open:{open,setOpen}}) {
             if(res.status === 200){
                 return res.json()
             }
+            return res.text().then(text => {throw new Error(text)})
         }).then(data => {
+            message.success({
+                content: 'Tạo project thành công!',
+                key: 'createProject',
+                duration: 2
+            })
             dispatch(createProject(data))
             formRef.current.resetFields()
             setOpen(false)
         }).catch(err => {
             console.log(err)
+            message.error({
+                content: err.message || 'Lỗi',
+                key: 'createProject',
+                duration: 2
+            })
         })
     }
     

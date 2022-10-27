@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import customFetch from '../../hook/customFetch'
 import { setFilter } from '../../redux/filterSlice'
 import { changeIndexIssue } from '../../redux/issuesSlice'
-import { filterSelector, getIssues, projectViewSelector } from '../../redux/selector'
+import { filterSelector, getIssues, projectViewSelector, userSelector } from '../../redux/selector'
 import ListIssues from '../ListIssues'
 import SettingIssues from '../modal/settingIssues/SettingIssues'
 import styles from './kanbanBoard.module.scss'
@@ -20,6 +20,7 @@ export default function KanbanBoard() {
     const clearFilterRef = React.useRef()
     const timmerRef = React.useRef()
 
+    const currentUser = useSelector(userSelector)
     const projectData = useSelector(projectViewSelector)
     const listIssues = useSelector(getIssues)
     const filterIssues = useSelector(filterSelector)
@@ -90,7 +91,7 @@ export default function KanbanBoard() {
                     body: JSON.stringify(listChange)
                 }).then(res => {
                     if(res.status === 200) return
-                    res.text().then((text) => {throw new Error(text)})
+                    return res.text().then((text) => {throw new Error(text)})
                 }).catch(err => {
                     message.error({
                         content: err.message,
@@ -114,7 +115,7 @@ export default function KanbanBoard() {
         <div className={styles['board_body']}>
             <div className={styles['board_body-filter']}>
                 <div className={styles['filter_search']}>
-                    <Input value={inputSearch} placeholder='Search...' onChange={handleInputChange} suffix={loading && <Spin style={{display: 'flex'}} size='small' />} prefix={<SearchOutlined />}/>
+                    <Input value={inputSearch} placeholder='Search...' onChange={handleInputChange} suffix={loading && <Spin style={{display: 'flex'}} size='small' />} prefix={<SearchOutlined />} allowClear={!loading} />
                 </div>
                 <div className={styles['filter_users']}>
                     <Avatar.Group
@@ -127,7 +128,7 @@ export default function KanbanBoard() {
                             cursor: 'pointer',
                         }}
                         >
-                            {projectData?.userIds?.map(user => (
+                            {projectData?.userIds?.map(user => user?.id !== currentUser?.id && (
                                 <Avatar key={user?.id} 
                                 className={`${styles['filter_users-item']} ${filterIssues?.users?.includes(user?.id) && styles['active']}`}
                                 onClick={() => handleClickFilter('users',user?.id)} src={user?.avatarUrl} />
@@ -142,7 +143,7 @@ export default function KanbanBoard() {
                     <Button type="text"
                     className={filterIssues?.options?.includes('newCreate') && styles['active']}
                      onClick={() => handleClickFilter('options','newCreate')}
-                     >Recently Updated</Button>
+                     >Recently Created</Button>
                     <Divider style={{height: 25, borderWidth: 2}} type='vertical'/>
                     <Button disabled type="text" ref={clearFilterRef}>Clear all</Button>
                 </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import customFetch from '../../hook/customFetch';
+import { setInitialProjects } from '../../redux/projectSlice';
 import { setCurrentUser } from '../../redux/userSlice';
 
 export default function Register() {
@@ -123,6 +124,7 @@ export default function Register() {
                         localStorage.setItem('access_token',data.accessToken)
                         delete data.accessToken
                         dispatch(setCurrentUser(data))
+                        dispatch(setInitialProjects([]))
                         navigate('/',{replace:true})
                     })
                     .catch(err => {

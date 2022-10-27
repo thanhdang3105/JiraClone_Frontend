@@ -7,7 +7,6 @@ import { issuesViewSelector, projectViewSelector, userSelector } from '../../../
 import customFetch from '../../../hook/customFetch'
 import styles from './settingIssues.module.scss';
 import TextArea from 'antd/lib/input/TextArea';
-import { formatDistanceToNowStrict } from 'date-fns/esm';
 import ReactQuill from 'react-quill'
 import moment from 'moment';
 
@@ -155,14 +154,6 @@ export default function SettingIssues({updateStatus}) {
         }
     }
 
-    const formatDate = React.useCallback((createdAt) => {
-        let formatedDate = '';
-        if (createdAt) {
-            formatedDate = formatDistanceToNowStrict(new Date(createdAt), { addSuffix: true });
-        }
-        return formatedDate;
-    }, []);
-
     const menuDropdown = React.useMemo(() => {
         let itemsMenu = []
         if(issueView?.id){
@@ -286,7 +277,7 @@ export default function SettingIssues({updateStatus}) {
                                     <li key={index} className={styles['comment']}>
                                         <Avatar src={comment?.avatarUrl} />
                                         <div className={styles['comment-info']}>
-                                            <p>{comment?.userName}  <span>{formatDate(comment?.updatedAt)}</span></p>
+                                            <p>{comment?.userName}  <span>{moment(comment?.updatedAt).fromNow()}</span></p>
                                             <span>{comment?.comment}</span>
                                         </div>
                                     </li>
@@ -329,7 +320,16 @@ export default function SettingIssues({updateStatus}) {
                         <div>
                             <p className={styles['text-label']}>REPORTER</p>
                             <Select bordered={false} size='large' style={{width: '100%'}} defaultValue={issueView?.reporterId?.id} onChange={(value) => value && handleChangeInfo({reporterId: value})} optionLabelProp="label">
-                                {projectView?.userIds?.length && projectView?.userIds?.map(user => (
+                                {issueView?.reporterId && (
+                                    <Select.Option value={issueView?.reporterId?.id} label={
+                                        <Button type="primary" style={{height: '100%',display: 'flex', alignItems: 'center', gap: 5,backgroundColor: '#9999',borderColor: 'transparent'}}>
+                                            <Avatar size='small' src={issueView?.reporterId?.avatarUrl} /> {' '+issueView?.reporterId?.name}
+                                        </Button>
+                                    }>
+                                        <Avatar size='small' src={issueView?.reporterId?.avatarUrl} /> {issueView?.reporterId?.name}
+                                    </Select.Option>
+                                )}
+                                {projectView?.userIds?.length && projectView?.userIds?.map(user => user.id !== issueView?.reporterId?.id && (
                                     <Select.Option key={user?.id} value={user.id} label={
                                         <Button type="primary" style={{height: '100%',display: 'flex', alignItems: 'center', gap: 5,backgroundColor: '#9999',borderColor: 'transparent'}}>
                                             <Avatar size='small' src={user?.avatarUrl} /> {' '+user.name}
@@ -380,8 +380,8 @@ export default function SettingIssues({updateStatus}) {
                         </div>
                         <Divider />
                         <div>
-                            <p>Created at {formatDate(issueView?.createdAt)}</p>
-                            <p>Updated at {formatDate(issueView?.updatedAt)}</p>
+                            <p>Created at {moment(issueView?.createdAt).fromNow()}</p>
+                            <p>Updated at {moment(issueView?.updatedAt).fromNow()}</p>
                         </div>
                     </div>
                 </div>

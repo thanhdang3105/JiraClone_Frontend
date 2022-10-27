@@ -24,6 +24,9 @@ export default function HomePage() {
     const navigate = useNavigate()
 
     React.useEffect(() => {
+        window.onbeforeunload = () => {
+            navigator.sendBeacon(process.env.REACT_APP_SERVERURL+'/api/users/logout')
+        }
         if(!Object.values(currentUser).length){
             const accessToken = localStorage.getItem('access_token')
             if(accessToken){
@@ -111,6 +114,7 @@ export default function HomePage() {
     const handleLogout = () => {
         dispatch(setCurrentUser({}))
         localStorage.removeItem('access_token')
+        customFetch('/api/users/logout',{method: 'POST'})
     }
 
     return loading ? <div className={styles['overlay_loading']}><Spin size='large' /></div> : (

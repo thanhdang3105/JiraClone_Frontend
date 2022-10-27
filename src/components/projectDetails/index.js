@@ -41,7 +41,7 @@ export default function ProjectDetails() {
                 body: JSON.stringify(formData)
             }).then(res => {
                 if(res.status === 200) return res.json();
-                res.text().then(text => {throw new Error(text)})
+                return res.text().then(text => {throw new Error(text)})
             }).then(data => {
                 message.success({
                     content: 'Cập nhật thành công!',
