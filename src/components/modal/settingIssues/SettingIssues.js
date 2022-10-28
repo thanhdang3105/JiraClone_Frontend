@@ -2,7 +2,7 @@ import { ArrowDownOutlined, ArrowUpOutlined, BookTwoTone, CheckSquareTwoTone, Cl
 import { Avatar, Button, DatePicker, Divider, Dropdown, InputNumber, Menu, message, Modal, Progress, Select } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteIssue, setIssueView, updateIsses } from '../../../redux/issuesSlice';
+import { deleteIssue, setIssueView, updateIssues } from '../../../redux/issuesSlice';
 import { issuesViewSelector, projectViewSelector, userSelector } from '../../../redux/selector';
 import customFetch from '../../../hook/customFetch'
 import styles from './settingIssues.module.scss';
@@ -93,7 +93,7 @@ export default function SettingIssues({updateStatus}) {
 
     const handleChangeInfo = React.useCallback((value) => {
         functionUpdate(value).then(data => {
-            dispatch(updateIsses(data))
+            dispatch(updateIssues(data))
         })
         .catch(err => {
             console.error(err)
@@ -105,7 +105,7 @@ export default function SettingIssues({updateStatus}) {
         title.contentEditable = false
         if(inputTitle){
             functionUpdate({title: inputTitle}).then(data => {
-                dispatch(updateIsses(data))
+                dispatch(updateIssues(data))
                 setInputTitle('')
             })
             .catch(err => {
@@ -117,12 +117,8 @@ export default function SettingIssues({updateStatus}) {
     const handleSendComment = () => {
         if(inputComment){
             let formData = {
-                id: issueView.id,
+                issueId: issueView?.id,
                 userId: currentUser.id,
-                userName: currentUser.name,
-                avatarUrl: currentUser.avatarUrl,
-                createdAt: Date.now(),
-                updatedAt: Date.now(),
                 comment: inputComment
             }
             message.loading({
@@ -142,11 +138,17 @@ export default function SettingIssues({updateStatus}) {
                     key: 'sendComment',
                     duration: 2
                 })
-                dispatch(updateIsses(data))
+                let newComments
+                if(Array.isArray(issueView?.comments)){
+                    newComments = [data,...issueView?.comments]
+                }else{
+                    newComments = [data]
+                }
+                dispatch(updateIssues({id: data.issueId,comments: newComments}))
                 setInputComment('')
             }).catch(err => {
                 message.error({
-                    content: err.message,
+                    content: err.message || 'Lỗi',
                     key: 'sendComment',
                     duration: 2
                 })
@@ -168,7 +170,21 @@ export default function SettingIssues({updateStatus}) {
     },[issueView,issuesType,handleChangeInfo])
 
     React.useEffect(() => {
-        if(issueView){
+        if(issueView?.id){
+            customFetch('/api/issues/comments?issueId='+issueView?.id)
+            .then(res => {
+                if(res.status === 200) return res.json()
+                throw new Error(res.text())
+            }).then(data => {
+                dispatch(updateIssues({id: issueView.id,comments: data}))
+            }).catch(err => {
+                console.error(err)
+            })
+        }
+    },[issueView?.id,dispatch])
+
+    React.useEffect(() => {
+        if(issueView?.id){
             const {createdAt,estimate,status} = issueView
             if(estimate > 0 && createdAt){
                 clearInterval(intervalRef.current)
@@ -277,7 +293,7 @@ export default function SettingIssues({updateStatus}) {
                                     <li key={index} className={styles['comment']}>
                                         <Avatar src={comment?.avatarUrl} />
                                         <div className={styles['comment-info']}>
-                                            <p>{comment?.userName}  <span>{moment(comment?.updatedAt).fromNow()}</span></p>
+                                            <p>{comment?.name}  <span>{moment(comment?.updatedAt).fromNow()}</span></p>
                                             <span>{comment?.comment}</span>
                                         </div>
                                     </li>

@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './searchIssues.module.scss'
 import customFetch from '../../../hook/customFetch';
 import { setIssuesSearchValues, setIssueView } from '../../../redux/issuesSlice';
-import { issuesSearchValuesSelector } from '../../../redux/selector';
+import { issuesSearchValuesSelector, projectViewSelector } from '../../../redux/selector';
 
 export default function SearchIssuesApi({open:{open,setOpen}}) {
     const [loading,setLoading] = React.useState(false)
 
     const timmerRef = React.useRef()
 
+    const projectView = useSelector(projectViewSelector)
     const IssuesSearchValues = useSelector(issuesSearchValuesSelector)
     const dispatch = useDispatch()
 
@@ -26,10 +27,10 @@ export default function SearchIssuesApi({open:{open,setOpen}}) {
     const handleSearchIssues = (e) => {
         const value = e.target.value
         clearTimeout(timmerRef.current)
-        if(value !== ''){
+        if(value !== '' && projectView?.id){
             setLoading(true)
             timmerRef.current = setTimeout(() => {
-                customFetch('/api/issues/search?searchTerm='+value)
+                customFetch('/api/issues/search?searchTerm='+value+'&projectId='+projectView?.id)
                 .then(res => {
                     if(res.status === 200) return res.json()
                     throw new Error(res.text())

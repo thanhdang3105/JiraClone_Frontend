@@ -38,14 +38,19 @@ const issuesSlice = createSlice({
             state.issueView = {}
             return state
         },
-        updateIsses: (state,{payload}) => {
-            state.listIssues.map(issue => {
-                if(issue.id === payload.id) {
-                    Object.assign(issue, payload)
-                }
-                return issue
-            })
-            Object.assign(state.issueView,payload)
+        updateIssues: (state,{payload}) => {
+            if(payload.comments === null) {
+                delete payload.comments
+            }
+            if(payload?.id){
+                state.listIssues.map(issue => {
+                    if(issue.id === payload.id) {
+                        Object.assign(issue, payload)
+                    }
+                    return issue
+                })
+                Object.assign(state.issueView,payload)
+            }
             return state
         },
         setIssuesSearchValues: (state,{payload}) => {
@@ -64,23 +69,11 @@ const issuesSlice = createSlice({
                     return item
                 })
                 return state
-                
-                // const {currentIndex,newIndex} = payload
-                // if(currentIndex.droppableId === newIndex.droppableId && currentIndex.index === newIndex.index) {
-                //     return state
-                // }else if(currentIndex.droppableId === newIndex.droppableId && currentIndex.index !== newIndex.index){
-                //     const issueItem = state.listIssues.find(issue => issue.status === currentIndex.droppableId && issue.index === currentIndex.index);
-                //     issueItem?.length && listIssues[destination.droppableId].splice(destination.index,1,issueItem[0])
-                //     const newList = listIssues[destination.droppableId].map((issue,index) => {
-                //         return {id: issue.id,index}
-                //     })
-                // }
-
             }
         }
     }
 })
 
-export const { setInitialIssues, createIssues, updateAssignees, setIssueView, deleteIssue, updateIsses, setIssuesSearchValues, changeIndexIssue } = issuesSlice.actions
+export const { setInitialIssues, createIssues, updateAssignees, setIssueView, deleteIssue, updateIssues, setIssuesSearchValues, changeIndexIssue } = issuesSlice.actions
 
 export default issuesSlice.reducer

@@ -42,14 +42,14 @@ export default function ProjectDetails() {
             }).then(res => {
                 if(res.status === 200) return res.json();
                 return res.text().then(text => {throw new Error(text)})
-            }).then(data => {
+            }).then(() => {
                 message.success({
                     content: 'Cập nhật thành công!',
                     key: 'updateProject',
                     duration: 2
                 })
                 btn_submitRef.current?.setAttribute('disabled',true)
-                dispatch(updateProject(data))
+                dispatch(updateProject(formData))
             }).catch(err => {
                 message.error({
                     content: err.message,

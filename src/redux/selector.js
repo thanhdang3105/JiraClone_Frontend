@@ -12,10 +12,11 @@ const getIssues = createSelector(
     userSelector,
     issuesSelector,
     filterSelector,
-    (user,issues,{text,users,options}) => {
+    (user,issues,{searchTerm,users,options}) => {
         let resultSearch = issues
-        if(text){
-            resultSearch = resultSearch.filter(item => item.title.toLowerCase().includes(text.toLowerCase()))
+        if(searchTerm){
+            let listId = searchTerm.map(value => value.id)
+            resultSearch = resultSearch.filter(item => listId.includes(item.id))
         }
         if(users.length){
             resultSearch = resultSearch.filter(item => users.find(user => {

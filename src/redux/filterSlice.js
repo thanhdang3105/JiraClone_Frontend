@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const filterSlice = createSlice({
     name: 'filterIssues',
     initialState: {
-        text: '',
+        searchTerm: undefined,
         users: [],
         options: []
     },
@@ -11,8 +11,8 @@ const filterSlice = createSlice({
         setFilter: (state,{payload}) => {
             const {action,value} = payload;
             switch (action) {
-                case 'text':
-                    state[action.toLowerCase()] = value;
+                case 'searchTerm':
+                    state[action] = value;
                     return state
                 case 'users':
                 case 'options':

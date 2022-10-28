@@ -23,10 +23,13 @@ export default function HomePage() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const handleLogout = () => {
+        dispatch(setCurrentUser({}))
+        localStorage.removeItem('access_token')
+        customFetch('/api/users/logout')
+    }
+
     React.useEffect(() => {
-        window.onbeforeunload = () => {
-            navigator.sendBeacon(process.env.REACT_APP_SERVERURL+'/api/users/logout')
-        }
         if(!Object.values(currentUser).length){
             const accessToken = localStorage.getItem('access_token')
             if(accessToken){
@@ -47,7 +50,7 @@ export default function HomePage() {
                         delete data.accessToken
                     }
                     setLoading(false)
-                    dispatch(setInitialProjects(data.projectIds))
+                    dispatch(setInitialProjects(data.projects))
                     dispatch(setCurrentUser(data))
                 }).catch(err => {
                     localStorage.removeItem('access_token')
@@ -109,12 +112,6 @@ export default function HomePage() {
         } catch (error) {
             console.error(error)
         }
-    }
-
-    const handleLogout = () => {
-        dispatch(setCurrentUser({}))
-        localStorage.removeItem('access_token')
-        customFetch('/api/users/logout',{method: 'POST'})
     }
 
     return loading ? <div className={styles['overlay_loading']}><Spin size='large' /></div> : (

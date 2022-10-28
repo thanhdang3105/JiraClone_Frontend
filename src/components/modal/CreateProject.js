@@ -15,7 +15,7 @@ export default function CreateProject({open:{open,setOpen}}) {
 
     const formSubmit = (value) => {
         value.userId = currentUser.id
-        value.userIds = currentUser.id
+        value.userIds = [currentUser.id]
         message.loading({
             content: 'Loading...',
             key: 'createProject',

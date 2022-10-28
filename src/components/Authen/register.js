@@ -121,8 +121,10 @@ export default function Register() {
                             duration: 2
                         })
                         setLoading(false)
-                        localStorage.setItem('access_token',data.accessToken)
-                        delete data.accessToken
+                        if(data?.accessToken){
+                            localStorage.setItem('access_token',data.accessToken)
+                            delete data.accessToken
+                        }
                         dispatch(setCurrentUser(data))
                         dispatch(setInitialProjects([]))
                         navigate('/',{replace:true})

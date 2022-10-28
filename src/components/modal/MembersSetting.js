@@ -38,7 +38,7 @@ export default function MembersSetting({open:{open,setOpen}}) {
             try {
                 const res = await customFetch('/api/projects/addUsers',{
                     method: 'POST',
-                    body: JSON.stringify({userIds:users,projectId: projectView?.id})
+                    body: JSON.stringify({userIds:users,project: projectView})
                 })
                 return res.json()
             } catch (error) {
@@ -49,7 +49,7 @@ export default function MembersSetting({open:{open,setOpen}}) {
             try {
                 const res = await customFetch('/api/projects/removeUsers',{
                     method: 'POST',
-                    body: JSON.stringify({userIds:users,projectId: projectView?.id})
+                    body: JSON.stringify({userIds:users,project: projectView})
                 })
                 return res.json()
             } catch (error) {

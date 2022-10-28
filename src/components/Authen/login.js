@@ -40,7 +40,7 @@ export default function Login() {
                 localStorage.setItem('access_token',data.accessToken)
                 delete data.accessToken
             }
-            dispatch(setInitialProjects(data.projectIds))
+            dispatch(setInitialProjects(data.projects))
             dispatch(setCurrentUser(data))
             navigate('/',{replace: true})
         }).catch(err => {

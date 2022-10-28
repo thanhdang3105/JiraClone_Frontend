@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux'
 import CreateIssues from '../modal/CreateIssues'
 import MembersSetting from '../modal/MembersSetting'
 import SearchIssuesApi from '../modal/searchIssues/SearchIssues'
+import { useDispatch } from 'react-redux'
+import { setFilter } from '../../redux/filterSlice'
 
 export default function SiderBar(){
     const [openSearchApi,setOpenSearchApi] = React.useState(false)
@@ -16,7 +18,15 @@ export default function SiderBar(){
     const projectData = useSelector(projectViewSelector)
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const location = useLocation()
+
+    React.useEffect(() => {
+        dispatch(setFilter({action: 'clear'}))
+        return () => {
+            dispatch(setFilter({action: 'clear'}))
+        }
+    },[location,dispatch])
 
     React.useEffect(() => {
         !Object.values(projectData).length && navigate('/')

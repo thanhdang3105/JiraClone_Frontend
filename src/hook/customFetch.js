@@ -2,7 +2,10 @@
 export default function customFetch(url,options = {method: 'GET'}) {
     try {
         return new Promise(function(resolve,reject) {
-            Object.assign(options,{credentials: 'include',headers: {authorization: '123444'}})
+            const authorization = localStorage.getItem('access_token')
+            if(authorization) {
+                Object.assign(options,{credentials: 'include',headers: {authorization: 'Bearer '+authorization}})
+            }
             fetch(process.env.REACT_APP_SERVERURL+url,options)
             .then(res => resolve(res))
             .catch(err => reject(err))

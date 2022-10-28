@@ -48,15 +48,28 @@ export default function KanbanBoard() {
         clearTimeout(timmerRef.current)
         if(e.target.value === ''){
             setLoading(false)
-            dispatch(setFilter({action: 'text',value: e.target.value}))
+            dispatch(setFilter({action: 'searchTerm',value: undefined}))
         }else{
             setLoading(true)
             timmerRef.current = setTimeout(() => {
-                dispatch(setFilter({action: 'text',value: e.target.value}))
-                setLoading(false)
+                customFetch('/api/issues/search?searchTerm='+e.target.value+'&projectId='+projectData?.id)
+                .then(res => {
+                    if(res.status === 200) return res.json()
+                    throw new Error(res.text())
+                })
+                .then(data => {
+                    dispatch(setFilter({action: 'searchTerm',value: data}))
+                    setLoading(false)
+                }).catch(err => {
+                    message.error({
+                        content: err.message,
+                        key: 'errSearch',
+                        duration: 2
+                    })
+                    setLoading(false)
+                })
             },1500)
         }
-        
     }
 
     const moveIssueByStatusAndIndex = (source,destination) => {

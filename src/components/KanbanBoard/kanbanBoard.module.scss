@@ -38,8 +38,9 @@
         .board_body-list{
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(4,calc(25% - 10px));
+            grid-template-columns: repeat(4,1fr);
             grid-gap: 10px;
+            margin-top: 15px;
         }
     }
 }
