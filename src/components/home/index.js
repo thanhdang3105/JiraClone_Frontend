@@ -1,13 +1,13 @@
 import { PlusOutlined,CloseOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Button, message, Spin } from 'antd';
+import { Button, message } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import customFetch from '../../hook/customFetch';
 import { setFilter } from '../../redux/filterSlice';
 import { setInitialIssues } from '../../redux/issuesSlice';
-import { deleteProject, setInitialProjects, setProjectView } from '../../redux/projectSlice';
-import { listProjectsSelector, userSelector } from '../../redux/selector';
+import { deleteProject, setProjectView } from '../../redux/projectSlice';
+import { listProjectsSelector } from '../../redux/selector';
 import { setCurrentUser } from '../../redux/userSlice';
 import CreateProject from '../modal/CreateProject';
 import UserInfo from '../userInfo';
@@ -15,10 +15,8 @@ import styles from './homepage.module.scss'
 
 export default function HomePage() {
     const [isCreateProject,setIsCreateProject] = React.useState(false)
-    const [loading,setLoading] = React.useState(true)
 
     const listProjects = useSelector(listProjectsSelector)
-    const currentUser = useSelector(userSelector)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -28,44 +26,6 @@ export default function HomePage() {
         localStorage.removeItem('access_token')
         customFetch('/api/users/logout')
     }
-
-    React.useEffect(() => {
-        if(!Object.values(currentUser).length){
-            const accessToken = localStorage.getItem('access_token')
-            if(accessToken){
-                customFetch('/api/users/authorization',{
-                    method: 'POST',
-                    body: JSON.stringify({accessToken})
-                }).then(res => {
-                    if(res.status === 200){
-                        return res.json()
-                    }else if(res.status === 400){
-                        throw new Error('Tài khoản không tồn tại!')
-                    }else{
-                        throw new Error('Lỗi!')
-                    }
-                }).then(data => {
-                    if(data.accessToken){
-                        localStorage.setItem('access_token',data.accessToken)
-                        delete data.accessToken
-                    }
-                    setLoading(false)
-                    dispatch(setInitialProjects(data.projects))
-                    dispatch(setCurrentUser(data))
-                }).catch(err => {
-                    localStorage.removeItem('access_token')
-                    console.log(err)
-                    setLoading(false)
-                    navigate('/authentication')
-                })
-            }else{
-                setLoading(false)
-                navigate('/authentication')
-            }
-        }else{
-            setLoading(false)
-        }
-    },[dispatch,navigate,currentUser])
 
     const handleDeletePJ = (projectId) => {
         message.loading({
@@ -114,7 +74,7 @@ export default function HomePage() {
         }
     }
 
-    return loading ? <div className={styles['overlay_loading']}><Spin size='large' /></div> : (
+    return (
         <div className={styles['wrapper_homePage']}>
             <div className={styles['homePage_siderBar']}>
                 <UserInfo />

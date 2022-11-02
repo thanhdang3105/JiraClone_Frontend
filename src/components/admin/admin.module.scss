@@ -1,0 +1,108 @@
+.wrapper{
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper_sider{
+    position: fixed;
+    height: 100vh;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    .sider_logo{
+        width: 100%;
+        height: 64px;
+        padding: 12px 0;
+        overflow: hidden;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+    }
+}
+
+.wrapper_body{
+    transition: all 0.2s;
+    .body_header{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 28px;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #9995;
+        box-shadow: 0 -5px 15px 5px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s;
+        z-index: 1;
+        .header_menu-trigger{
+            font-size: 20px;
+        }
+    }
+    .body_content{
+        margin: 64px 0 0;
+        padding: 10px 28px 0;
+        min-height: calc(100vh - 64px);
+        height: 100%;
+        background-color: white;
+        .content_view{
+            width: 100%;
+            height: 100%;
+            .wrapper_table{
+                overflow-y: visible;
+            }
+            .content_searchBox{
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin: 6px 0 30px;
+                .input_search{
+                    max-width: 33.333%;
+                }
+                button{
+                    background-color: #17a2b8;
+                    border-color: #17a2b8;
+                    &:hover{
+                        background-color: #137d8d;
+                        border-color: #137d8d;
+                    }
+                }
+            }
+        }
+    }
+}
+.btn{
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    text-transform: capitalize;
+    & + .btn{
+        margin-left: 1px;
+    }
+    &:hover{
+        background-color: #137d8d;
+        border-color: #137d8d;
+    }
+}
+
+.modal_form{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 5px;
+}
+
+.form_item{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.space_box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 30px;
+    align-items: end;
+}

@@ -1,0 +1,311 @@
+[
+    {
+        "name": "Projects",
+        "sid": "projects",
+        "modelName": "projects",
+        "icon": "InboxOutlined",
+        "collections": ["users"],
+        "models": [
+            {
+                "name": "UserId",
+                "field": "userId",
+                "widget": "Select",
+                "type": "string",
+                "collection": "users",
+                "required": true
+            },
+            {
+                "name": "Name",
+                "field": "name",
+                "widget": "Input",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Description",
+                "field": "description",
+                "widget": "Input",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Category",
+                "field": "category",
+                "widget": "Select",
+                "options": ["software","marketing","business"],
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Project URL",
+                "field": "projectUrl",
+                "widget": "Input",
+                "type": "string",
+                "required": false
+            }
+        ],
+        "columns": [
+            {
+                "name": "Name",
+                "field": "name",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Category",
+                "field": "category",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Project URL",
+                "field": "projectUrl",
+                "type": "string",
+                "filterable": false
+            },
+            {
+                "name": "User",
+                "field": "userId",
+                "type": "string",
+                "collection": "users",
+                "filterable": false
+            }
+        ],
+        "buttons": [
+            {
+                "name": "Create",
+                "icon": "PlusOutlined",
+                "action": "api",
+                "mode": "create",
+                "position": ["modal","table"]
+            },
+            {
+                "name": "Update",
+                "icon": "EditOutlined",
+                "action": "api",
+                "mode": "update",
+                "position": ["modal","action"]
+            },
+            {
+                "name": "Delete",
+                "icon": "DeleteOutlined",
+                "action": "api",
+                "mode": "delete",
+                "position": ["modal","action"]
+            }
+        ]
+    },
+    {
+        "name": "Issues",
+        "sid": "issues",
+        "modelName": "issues",
+        "icon": "CarryOutOutlined",
+        "collections": ["projects","users"],
+        "models": [
+            {
+                "name": "ProjectId",
+                "field": "projectId",
+                "widget": "Select",
+                "type": "string",
+                "collection": "projects",
+                "required": true
+            },
+            {
+                "name": "Title",
+                "field": "title",
+                "widget": "Input",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Description",
+                "field": "description",
+                "widget": "Input",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "ReporterId",
+                "field": "reporterId",
+                "widget": "Select",
+                "type": "string",
+                "collection": "users",
+                "required": true
+            },
+            {
+                "name": "Type",
+                "field": "type",
+                "widget": "Select",
+                "options": ["task","bug","story"],
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Status",
+                "field": "status",
+                "widget": "Select",
+                "options": ["backlog","selected","progress","done"],
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Priority",
+                "field": "priority",
+                "options": ["highest","high","medium","low","lowest"],
+                "widget": "Select",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "Estimate",
+                "field": "estimate",
+                "widget": "InputNumber",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "Deadline",
+                "field": "deadline",
+                "widget": "DatePicker",
+                "type": "number",
+                "required": false
+            }
+        ],
+        "columns": [
+            {
+                "name": "Title",
+                "field": "title",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Type",
+                "field": "type",
+                "widget": "tag",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Status",
+                "field": "status",
+                "widget": "tag",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Priority",
+                "field": "priority",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Estimate",
+                "field": "estimate",
+                "type": "number",
+                "filterable": false
+            },
+            {
+                "name": "Project",
+                "field": "projectId",
+                "type": "string",
+                "collection": "projects",
+                "filterable": false
+            },
+            {
+                "name": "Deadline",
+                "field": "deadline",
+                "widget": "date",
+                "type": "number",
+                "filterable": false
+            }
+        ],
+        "buttons": [
+            {
+                "name": "Create",
+                "icon": "PlusOutlined",
+                "action": "api",
+                "mode": "create",
+                "position": ["modal","table"]
+            },
+            {
+                "name": "Update",
+                "icon": "EditOutlined",
+                "action": "api",
+                "mode": "update",
+                "position": ["modal","action"]
+            },
+            {
+                "name": "Delete",
+                "icon": "DeleteOutlined",
+                "action": "api",
+                "mode": "delete",
+                "position": ["modal","action"]
+            }
+        ]
+    },
+    {
+        "name": "Users",
+        "sid": "users",
+        "modelName": "users",
+        "icon": "TeamOutlined",
+        "models":[
+            {
+                "name": "Name",
+                "field": "name",
+                "type": "string",
+                "widget": "Input",
+                "required": true
+            },
+            {
+                "name": "Email",
+                "field": "email",
+                "type": "string",
+                "widget": "Input",
+                "required": true
+            },
+            {
+                "name": "AvatarUrl",
+                "field": "avatarUrl",
+                "type": "string",
+                "widget": "Upload",
+                "required": false
+            }
+        ],
+        "columns": [
+            {
+                "name": "Name",
+                "field": "name",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "Email",
+                "field": "email",
+                "type": "string",
+                "filterable": true
+            },
+            {
+                "name": "AvatarUrl",
+                "field": "avatarUrl",
+                "type": "string",
+                "filterable": true
+            }
+        ],
+        "buttons": [
+            {
+                "name": "Update",
+                "icon": "EditOutlined",
+                "action": "api",
+                "mode": "update",
+                "position": ["modal","action"]
+            },
+            {
+                "name": "Delete",
+                "icon": "DeleteOutlined",
+                "action": "api",
+                "mode": "delete",
+                "position": ["action"]
+            }
+        ]
+    }
+]

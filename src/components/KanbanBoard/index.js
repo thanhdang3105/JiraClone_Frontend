@@ -58,6 +58,7 @@ export default function KanbanBoard() {
                     throw new Error(res.text())
                 })
                 .then(data => {
+                    console.log(data)
                     dispatch(setFilter({action: 'searchTerm',value: data}))
                     setLoading(false)
                 }).catch(err => {

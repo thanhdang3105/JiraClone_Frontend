@@ -10,6 +10,19 @@
   overflow: hidden;
 }
 
+.ant-table-body{
+  overflow-y: overlay !important;
+}
+
+.overlay_loading{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  font-size: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
