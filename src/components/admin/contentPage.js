@@ -1,4 +1,5 @@
 import { Tabs } from 'antd';
+import * as icons from '@ant-design/icons'
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ContentView from './contentView';
@@ -21,7 +22,7 @@ export default function ContentPage() {
             }
             newListTab.unshift({
               key: tabInfo.sid,
-              label: tabInfo.name,
+              label: <>{tabInfo.icon && React.createElement(icons[tabInfo.icon])}{tabInfo.name}</>,
               children: <ContentView data={tabInfo} flag={[flagData,setFlagData]} />
             })
             if(newListTab.length === 1) {

@@ -4,7 +4,7 @@ import React from 'react';
 import styles from '../admin.module.scss'
 import customFetch from '../../../hook/customFetch';
 
-export default function AdvancedSearch({open:{open,setOpen}, data, setDataView}) {
+export default function AdvancedSearch({open:{open,setOpen}, setTagsSearch, data, setDataView}) {
     const [loading,setLoading] = React.useState(false)
     const [columnOption,setColumnOption] = React.useState()
     const [operatorOption,setOperatorOption] = React.useState([])
@@ -19,7 +19,7 @@ export default function AdvancedSearch({open:{open,setOpen}, data, setDataView})
 
     const listOperator = React.useMemo(() => {
         return {
-            string: ['contains','startsWith','endsWith'],
+            string: ['contains','equals','startsWith','endsWith'],
             number: ['=','!=','>','<','<=','>=']
         }
     },[])
@@ -38,17 +38,20 @@ export default function AdvancedSearch({open:{open,setOpen}, data, setDataView})
     const handleOk = () => formRef.current.submit()
 
     const handleSubmitForm = (formData) => {
-        let query
+        let query = ''
         formData?.search?.map(item => {
-            if(!query){
-                query = `{"${item.column}":{"${item.operator}":"${item.value}"}`    
+            let operator
+            if(item.operator === 'equals' || item.operator === '='){
+                operator = `"${item.value}"`
             }else{
-                query = query + `,"${item.column}":{"${item.operator}":"${item.value}"}`
+                operator = `{"${item.operator}":"${item.value}"}`
             }
+            query = query + `"${item.column}": ${operator},`
             return item
         })
+        query = query.slice(0,-1)
         setLoading(true)
-        customFetch(`/${data.modelName}?where=${query}}&populate=false`)
+        customFetch(`/${data.modelName}?where={${query}}&sort=createdAt DESC&populate=false`)
             .then(res => {
                 if(res.status === 200) return res.json()
                 return res.text().then(text => {throw new Error(text)})
@@ -61,6 +64,7 @@ export default function AdvancedSearch({open:{open,setOpen}, data, setDataView})
                     duration: 2
                 })
                 setLoading(false)
+                setTagsSearch(query.split(','))
             }).catch(err => {
                 console.log(err)
                 setLoading(false)

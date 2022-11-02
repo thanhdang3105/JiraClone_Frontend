@@ -60,13 +60,7 @@ return (
                 className: styles['header_menu-trigger'],
                 onClick: () => setCollapsed(!collapsed),
             })}
-            <Tooltip title={<Menu items={[{
-                key: '1',
-                label: 'Profile'
-            },{
-                key: '2',
-                label: 'LogOut'
-            }]} />} color='white'>
+            <Tooltip title='Profile' color='#17a2b8'>
                 <Avatar src='/images/logo.png' alt='avatar' />
             </Tooltip>
             </Header>

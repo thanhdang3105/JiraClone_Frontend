@@ -91,7 +91,7 @@
                 "icon": "DeleteOutlined",
                 "action": "api",
                 "mode": "delete",
-                "position": ["modal","action"]
+                "position": ["action"]
             }
         ]
     },
@@ -239,7 +239,7 @@
                 "icon": "DeleteOutlined",
                 "action": "api",
                 "mode": "delete",
-                "position": ["modal","action"]
+                "position": ["action"]
             }
         ]
     },

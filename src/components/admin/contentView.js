@@ -16,6 +16,7 @@ export default function ContentView({data}) {
     const [dataView,setDataView] = React.useState(false)
     const [dataCollections,setDataCollections] = React.useState(false)
     const [inputSearch,setInputSearch] = React.useState('')
+    const [tagsSearch,setTagsSearch] = React.useState([])
     const [dataEdit,setDataEdit] = React.useState()
 
     const handleClickAction = React.useCallback((mode,action,item) => {
@@ -108,6 +109,9 @@ export default function ContentView({data}) {
                 setDataView(data)
              }).catch(err => console.log(err))
         }
+    },[dataView,getData])
+
+    React.useLayoutEffect(() => {
         if(data.collections){
             data.collections.map(collection => {
                 getData(collection).then(data => {
@@ -122,7 +126,7 @@ export default function ContentView({data}) {
                  return collection
             })
         }
-    },[dataView,getData,data])
+    },[data,getData])
 
     React.useEffect(() => {
         if(!openModal) setDataEdit()
@@ -208,6 +212,7 @@ export default function ContentView({data}) {
                 setDataView(data)
                 setLoadingTable(false)
                 setInputSearch('')
+                setTagsSearch([`"${fieldSearch}": "${value}"`])
             }).catch(err => {
                 console.log(err)
                 setLoadingTable(false)
@@ -223,7 +228,8 @@ export default function ContentView({data}) {
     const handleRefresh = () => {
         getData().then(data => {
             setDataView(data)
-         }).catch(err => console.log(err))
+        }).catch(err => console.log(err))
+        setTagsSearch([])
     }
 
     return (
@@ -233,6 +239,13 @@ export default function ContentView({data}) {
       className={styles['content_view']}
     >
         <div className={styles['content_searchBox']}>
+            <div className={styles['search_tags']}>
+                {tagsSearch && tagsSearch.length !== 0 && (
+                    <>Search: {tagsSearch.map(tag => (
+                        <Tag color='#17a2b8' style={{lineHeight: 2}}>{tag}</Tag>
+                    ))}</>
+                )}
+            </div>
             <Search value={inputSearch} allowClear onChange={(e) => setInputSearch(e.target.value)} placeholder={data.columns[0].name} onSearch={handleSearch} className={styles['input_search']} 
             enterButton={<Button type='primary'><SearchOutlined /></Button>} />
             <Tooltip placement='bottom' color='#17a2b8' title='Advanced search'>
@@ -254,7 +267,7 @@ export default function ContentView({data}) {
             className={styles['wrapper_table']}
         />
         {openModal && <ModalDefault open={{open: openModal,setOpen: setOpenModal}} data={data} dataCollections={dataCollections} setDataView={setDataView} dataEdit={dataEdit} />}
-        {openAdvancedSearch && <AdvancedSearch open={{open: openAdvancedSearch,setOpen: setOpenAdvancedSearch}} data={data} setDataView={setDataView} />}
+        {openAdvancedSearch && <AdvancedSearch open={{open: openAdvancedSearch,setOpen: setOpenAdvancedSearch}} setTagsSearch={setTagsSearch} data={data} setDataView={setDataView} />}
     </Card>
     )
 }
